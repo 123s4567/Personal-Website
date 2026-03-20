@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saransh Kushwaha — Cybersecurity Researcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,700;1,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#02040a;--s1:#070d1a;--s2:#0a1020;--card:#0d1628;
+  --b:rgba(56,189,248,.1);--a1:#38bdf8;--a2:#818cf8;--a3:#2dd4bf;--a4:#f472b6;
+  --tx:#e2e8f0;--mu:#475569;--mu2:#64748b
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:'JetBrains Mono',monospace;overflow-x:hidden;cursor:none}
+
+/* ── CURSOR ── */
+#cur,#curR{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%)}
+#cur{width:10px;height:10px;background:var(--a1);mix-blend-mode:screen;transition:width .2s,height .2s,background .2s}
+#curR{width:36px;height:36px;border:1px solid rgba(56,189,248,.35);transition:all .12s}
+#cur.h{width:18px;height:18px;background:var(--a2)}
+#curR.h{width:54px;height:54px;border-color:var(--a2)}
+
+/* ── PROGRESS ── */
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a4));z-index:200}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(2,4,10,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--b)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--a1);letter-spacing:.05em}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{text-decoration:none;color:var(--mu2);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;transition:color .2s;cursor:none}
+.nav-links a:hover,.nav-links a.active{color:var(--a1)}
+
+/* ── SECTIONS ── */
+section{padding:7rem 4rem;position:relative;overflow:hidden}
+.sh{display:flex;align-items:center;gap:1.5rem;margin-bottom:4rem}
+.sn{font-size:.62rem;color:var(--a1);letter-spacing:.15em}
+.st{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800}
+.sl{flex:1;height:1px;background:var(--b)}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+.rv2{opacity:0;transform:translateX(-30px);transition:opacity .8s ease,transform .8s ease}
+.rv2.on{opacity:1;transform:translateX(0)}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;align-items:center;padding:8rem 4rem 4rem}
+.hero-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;width:100%;max-width:1400px;margin:0 auto}
+#mc{position:absolute;inset:0;opacity:.065;pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;background:rgba(56,189,248,.06);border:1px solid rgba(56,189,248,.2);border-radius:100px;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--a1);margin-bottom:1.8rem;animation:fiu .8s ease both}
+.tdot{width:6px;height:6px;background:var(--a3);border-radius:50%;animation:blink 1.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hname{font-family:'Syne',sans-serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:800;line-height:.95;margin-bottom:1.2rem;animation:fiu .8s .15s ease both}
+.hname .n1{background:linear-gradient(120deg,#e2e8f0,var(--a1) 60%,var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hname .n2{font-family:'Fraunces',serif;font-style:italic;font-weight:300;color:var(--mu);-webkit-text-fill-color:var(--mu)}
+.htitle{font-family:'Fraunces',serif;font-size:1.1rem;color:var(--mu2);margin-bottom:1.4rem;animation:fiu .8s .3s ease both}
+.htitle em{color:var(--a2)}
+.hdesc{font-size:.8rem;line-height:2;color:#7c8fa8;max-width:480px;margin-bottom:2.5rem;animation:fiu .8s .45s ease both}
+.hbtns{display:flex;gap:1rem;animation:fiu .8s .6s ease both}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.06em;text-decoration:none;transition:all .3s;cursor:none}
+.bp{background:var(--a1);color:#02040a;font-weight:500}
+.bp:hover{background:#7dd3fc;transform:translateY(-2px);box-shadow:0 12px 32px rgba(56,189,248,.3)}
+.bo{border:1px solid var(--b);color:var(--tx)}
+.bo:hover{border-color:var(--a1);color:var(--a1);transform:translateY(-2px)}
+@keyframes fiu{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── ABOUT ── */
+#about{background:var(--s1)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.about-text p{font-size:.82rem;line-height:2;color:#7c8fa8;margin-bottom:1.2rem}
+.about-text p strong{color:var(--tx)}
+.phd-card{background:var(--card);border:1px solid var(--b);border-radius:14px;padding:2rem;position:relative;overflow:hidden;margin-top:2rem}
+.phd-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3))}
+.phd-lbl{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--a1);margin-bottom:.8rem}
+.phd-ttl{font-family:'Fraunces',serif;font-size:.93rem;line-height:1.65;color:var(--tx);font-style:italic;margin-bottom:1.5rem}
+.phd-rows{display:flex;flex-direction:column;gap:.55rem}
+.phd-row{display:flex;gap:1rem;font-size:.7rem;color:var(--mu2)}
+.phd-row span:first-child{color:var(--a2);min-width:85px}
+/* orbit panel – always visible */
+.orbit-panel{width:100%;aspect-ratio:1;background:var(--s2);border-radius:16px;border:1px solid var(--b);overflow:hidden}
+
+/* ── EXPERIENCE ── */
+#experience{background:var(--s2)}
+.exp-top{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-bottom:4rem;align-items:start}
+.tl{position:relative;padding-left:1.5rem}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--a1),var(--a2) 70%,transparent)}
+.ti{position:relative;padding:0 0 3rem 2.5rem}
+.ti::before{content:'';position:absolute;left:-4px;top:8px;width:9px;height:9px;border-radius:50%;transition:transform .3s}
+.ti:nth-child(1)::before{background:var(--a1);box-shadow:0 0 14px rgba(56,189,248,.7)}
+.ti:nth-child(2)::before{background:var(--a2);box-shadow:0 0 14px rgba(129,140,248,.7)}
+.ti:nth-child(3)::before{background:var(--a3);box-shadow:0 0 14px rgba(45,212,191,.7)}
+.ti:nth-child(4)::before{background:var(--mu)}
+.ti:hover::before{transform:scale(1.6)}
+.tp{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem}
+.ti:nth-child(1) .tp{color:var(--a1)}
+.ti:nth-child(2) .tp{color:var(--a2)}
+.ti:nth-child(3) .tp{color:var(--a3)}
+.ti:nth-child(4) .tp{color:var(--mu2)}
+.tr{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--tx);margin-bottom:.25rem}
+.to{font-size:.73rem;color:var(--a2);margin-bottom:1.1rem}
+.ti:nth-child(3) .to{color:var(--a3)}
+.tul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.tul li{font-size:.74rem;line-height:1.7;color:#7c8fa8;padding-left:1.2rem;position:relative}
+.tul li::before{content:'›';position:absolute;left:0;color:var(--a3)}
+
+/* mindmap wrapper – clickable */
+.mm-wrap{position:relative;cursor:pointer;border-radius:12px;overflow:hidden;border:1px solid rgba(56,189,248,.12)}
+.mm-wrap:hover .mm-hint{opacity:1}
+.mm-hint{position:absolute;bottom:10px;right:14px;font-size:.65rem;color:var(--a1);background:rgba(2,4,10,.85);padding:.3rem .8rem;border-radius:4px;border:1px solid rgba(56,189,248,.2);pointer-events:none;opacity:.5;transition:opacity .3s;font-family:'JetBrains Mono',monospace}
+
+/* ── MINDMAP MODAL ── */
+#mm-modal{
+  position:fixed;inset:0;z-index:999;
+  background:rgba(2,4,10,.95);
+  backdrop-filter:blur(16px);
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:1.5rem;
+  padding:2rem;
+}
+#mm-modal.open{display:flex}
+#mm-full-canvas{border-radius:14px;border:1px solid rgba(56,189,248,.18);max-width:95vw;max-height:82vh;display:block}
+#mm-close-btn{
+  font-family:'JetBrains Mono',monospace;font-size:.75rem;
+  color:var(--a1);border:1px solid rgba(56,189,248,.3);
+  background:rgba(56,189,248,.06);padding:.55rem 2rem;
+  border-radius:6px;cursor:pointer;transition:all .2s;letter-spacing:.08em
+}
+#mm-close-btn:hover{background:rgba(56,189,248,.14);border-color:var(--a1)}
+
+/* ── INTERESTS ── */
+#interests{background:var(--s1)}
+.int-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+.int-card{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:1.8rem;transition:all .4s;cursor:none;overflow:hidden;position:relative}
+.int-card:hover{border-color:var(--a1);transform:translateY(-6px);box-shadow:0 24px 48px rgba(56,189,248,.1)}
+.ic-illo{height:88px;margin-bottom:1.2rem}
+.ic-title{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;color:var(--tx);margin-bottom:.5rem}
+.ic-desc{font-size:.7rem;color:var(--mu2);line-height:1.7}
+
+/* ── SKILLS ── */
+#skills{background:var(--bg)}
+.skills-layout{display:grid;grid-template-columns:1fr 300px;gap:4rem;align-items:start}
+.skill-groups{display:flex;flex-direction:column;gap:1.8rem}
+.sg{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:1.8rem;transition:border-color .3s}
+.sg:hover{border-color:rgba(56,189,248,.25)}
+.sg-title{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--a1);margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid var(--b)}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.tag{padding:.3rem .8rem;background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.12);border-radius:4px;font-size:.68rem;color:#7c8fa8;transition:all .25s;cursor:none}
+.tag:hover{background:rgba(56,189,248,.1);color:var(--a1);border-color:rgba(56,189,248,.3);transform:translateY(-2px)}
+
+/* ── EDUCATION ── */
+#education{background:var(--s1)}
+.edu-layout{display:grid;grid-template-columns:300px 1fr;gap:4rem;align-items:center}
+.edu-card-item{background:var(--card);border:1px solid var(--b);border-radius:12px;padding:1.8rem;margin-bottom:1.4rem;transition:all .4s;cursor:none;position:relative;overflow:hidden}
+.edu-card-item:hover{border-color:var(--a2);transform:translateX(8px)}
+.edu-card-item::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;transform:scaleY(0);transition:transform .4s;transform-origin:top}
+.edu-card-item:nth-child(1)::after{background:linear-gradient(to bottom,var(--a1),var(--a2))}
+.edu-card-item:nth-child(2)::after{background:linear-gradient(to bottom,var(--a2),var(--a3))}
+.edu-card-item:nth-child(3)::after{background:linear-gradient(to bottom,var(--a3),var(--a4))}
+.edu-card-item:hover::after{transform:scaleY(1)}
+.edu-yr{font-size:.62rem;color:var(--a1);margin-bottom:.5rem}
+.edu-deg{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--tx);margin-bottom:.3rem}
+.edu-sp{font-size:.7rem;color:var(--a2);margin-bottom:.5rem}
+.edu-ins{font-size:.7rem;color:var(--mu2)}
+.edu-badge{display:inline-block;margin-top:.7rem;padding:.2rem .65rem;background:rgba(45,212,191,.08);border:1px solid rgba(45,212,191,.2);border-radius:100px;font-size:.62rem;color:var(--a3)}
+
+/* ── PROJECTS ── */
+#projects{background:var(--s2)}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.8rem}
+.pcard{background:var(--card);border:1px solid var(--b);border-radius:14px;padding:2rem;transition:all .4s;cursor:none;overflow:hidden}
+.pcard:hover{border-color:var(--a2);transform:translateY(-5px);box-shadow:0 28px 56px rgba(0,0,0,.4)}
+.pnum{font-size:.62rem;color:var(--a2);letter-spacing:.1em;margin-bottom:.8rem}
+.ptitle{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--tx);margin-bottom:.7rem}
+.pdesc{font-size:.75rem;color:var(--mu2);line-height:1.75}
+.pill{height:76px;margin-bottom:1.2rem;border-radius:6px;overflow:hidden}
+
+/* ── CONTACT ── */
+#contact{background:var(--bg);text-align:center}
+.ci{max-width:750px;margin:0 auto;position:relative;z-index:2}
+.cbig{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,5.5vw,4.5rem);font-weight:800;line-height:1.1;margin-bottom:1.5rem}
+.cbig span{color:var(--a1)}
+.csub{font-size:.82rem;color:var(--mu2);line-height:2;margin-bottom:3rem}
+.clinks{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+.clink{display:flex;align-items:center;gap:.6rem;padding:.85rem 1.6rem;background:var(--card);border:1px solid var(--b);border-radius:8px;text-decoration:none;color:var(--tx);font-size:.75rem;transition:all .3s;cursor:none}
+.clink:hover{border-color:var(--a1);color:var(--a1);transform:translateY(-3px)}
+.cring{position:absolute;border:1px solid;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;animation:ringExp 4s ease-in-out infinite}
+@keyframes ringExp{0%{opacity:.3;transform:translate(-50%,-50%) scale(.8)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+footer{padding:2rem 4rem;border-top:1px solid var(--b);display:flex;align-items:center;justify-content:space-between;font-size:.68rem;color:var(--mu)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--a1);border-radius:4px}
+@media(max-width:1024px){
+  .hero-wrap,.about-grid,.exp-top,.skills-layout,.edu-layout{grid-template-columns:1fr}
+  section{padding:5rem 1.5rem}
+  .int-grid{grid-template-columns:1fr 1fr}
+  .proj-grid{grid-template-columns:1fr}
+  nav{padding:1rem 1.5rem}
+  .nav-links{gap:1.2rem}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="curR"></div><div id="prog"></div>
+
+<nav>
+  <div class="logo">SK_</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Career</a>
+    <a href="#interests">Research</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero">
+  <canvas id="mc"></canvas>
+  <div class="hero-wrap">
+    <div>
+      <div class="hero-tag"><span class="tdot"></span>Open to Research Collaborations</div>
+      <h1 class="hname"><span class="n1">Saransh</span><br><span class="n2">Kushwaha</span></h1>
+      <p class="htitle">Ph.D. Scholar · <em>Cybersecurity & UAV Forensics</em></p>
+      <p class="hdesc">Building intelligent forensic frameworks for drone evidence recovery using machine learning. Educator, Researcher, CTF architect — Pune, India.</p>
+      <div class="hbtns">
+        <a href="#contact" class="btn bp">Let's Connect ↗</a>
+        <a href="#experience" class="btn bo">Explore Work</a>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;align-items:center;animation:fiu .8s .3s ease both">
+      <canvas id="hero-drone" width="480" height="420" style="max-width:100%"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section id="about">
+  <div class="sh"><span class="sn">01 /</span><h2 class="st">About</h2><div class="sl"></div></div>
+  <div class="about-grid">
+    <div>
+      <div class="about-text rv">
+        <p>I'm a <strong>Ph.D. scholar and Assistant Professor</strong> at Nutan Maharashtra Institute of Engineering and Technology, Pune, with deep focus on cybersecurity education and digital forensics research.</p>
+        <p>My work spans <strong>embedded systems, UAV forensics, and machine learning</strong>—building intelligent frameworks to recover and analyze evidence from drone platforms with proprietary, encrypted data.</p>
+        <p>Beyond research, I'm passionate about <strong>CTF-based pedagogy and outcome-based education</strong>, designing experiential learning environments bridging theory and real-world practice.</p>
+      </div>
+      <div class="phd-card rv" style="transition-delay:.2s">
+        <div class="phd-lbl">🎓 Doctoral Research</div>
+        <div class="phd-ttl">"Enhancement of UAV Drone Forensics: A Novel Approach for Robust Evidence Recovery with Multi-Modal Embedded Systems Using Machine Learning Techniques"</div>
+        <div class="phd-rows">
+          <div class="phd-row"><span>Institution</span>D.Y. Patil International University, Pune</div>
+          <div class="phd-row"><span>Supervisor</span>Prof. (Dr.) Rahul Sharma</div>
+          <div class="phd-row"><span>Reg. No.</span>20241001015</div>
+          <div class="phd-row"><span>Status</span>Ongoing — Research Phase · Est. 2027</div>
+        </div>
+      </div>
+    </div>
+    <!-- Orbit canvas — always visible, no rv3 opacity trap -->
+    <div style="display:flex;justify-content:center;align-items:center">
+      <canvas id="orbit-canvas" width="540" height="540" style="max-width:100%;border-radius:16px;background:#070d1a;border:1px solid rgba(56,189,248,.1)"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EXPERIENCE ══════════ -->
+<section id="experience">
+  <div class="sh"><span class="sn">02 /</span><h2 class="st">Career</h2><div class="sl"></div></div>
+  <div class="exp-top">
+    <div class="tl">
+      <div class="ti rv2">
+        <div class="tp">Jul 2025 — Present</div>
+        <div class="tr">Assistant Professor</div>
+        <div class="to">Nutan Maharashtra Inst. of Engg. & Technology</div>
+        <ul class="tul">
+          <li>Curriculum revision for MCA, BCA, MBA — UGC & NEP 2020.</li>
+          <li>20+ hands-on lab modules with CO–PO mapping.</li>
+          <li>Mentored 30+ students; ERP, IQAC, R&D Coordinator.</li>
+        </ul>
+      </div>
+      <div class="ti rv2" style="transition-delay:.12s">
+        <div class="tp">Aug 2024 — Jul 2025</div>
+        <div class="tr">Teaching Assistant (PhD)</div>
+        <div class="to">D.Y. Patil International University</div>
+        <ul class="tul">
+          <li>Cybersecurity instruction for MCA and B.Tech.</li>
+          <li>20+ CTF-based exercises with real-world scenarios.</li>
+        </ul>
+      </div>
+      <div class="ti rv2" style="transition-delay:.24s">
+        <div class="tp">Jan 2024 — Jul 2024</div>
+        <div class="tr">Teaching Associate</div>
+        <div class="to">D.Y. Patil International University</div>
+        <ul class="tul">
+          <li>Postgrad Cybersecurity & Computer Applications.</li>
+          <li>Served as Academic In-Charge.</li>
+        </ul>
+      </div>
+      <div class="ti rv2" style="transition-delay:.36s">
+        <div class="tp">Nov 2022 — Jun 2023</div>
+        <div class="tr">Teaching Assistant (Part-Time)</div>
+        <div class="to">D.Y. Patil International University</div>
+        <ul class="tul"><li>Java programming labs for BCA students.</li></ul>
+      </div>
+    </div>
+    <!-- Growth chart -->
+    <div class="rv" style="transition-delay:.2s">
+      <canvas id="growth-chart" width="480" height="320" style="border-radius:12px;border:1px solid rgba(56,189,248,.1);display:block"></canvas>
+    </div>
+  </div>
+
+  <!-- Mind map - clickable -->
+  <div class="rv" style="transition-delay:.3s">
+    <p style="font-size:.68rem;color:var(--mu2);margin-bottom:.8rem;letter-spacing:.06em">CAREER ACTIVITIES MIND MAP &nbsp;·&nbsp; <span style="color:var(--a1)">Click to open full view</span></p>
+    <div class="mm-wrap" id="mm-wrap">
+      <canvas id="mindmap-preview" height="300" style="width:100%;display:block"></canvas>
+      <span class="mm-hint">🔍 Click to expand</span>
+    </div>
+  </div>
+</section>
+
+<!-- MINDMAP MODAL -->
+<div id="mm-modal">
+  <canvas id="mm-full-canvas"></canvas>
+  <button id="mm-close-btn">✕ &nbsp; Close Full View</button>
+</div>
+
+<!-- ══════════ RESEARCH INTERESTS ══════════ -->
+<section id="interests">
+  <div class="sh"><span class="sn">03 /</span><h2 class="st">Research Interests</h2><div class="sl"></div></div>
+  <div class="int-grid">
+    <div class="int-card rv">
+      <div class="ic-illo">
+        <canvas id="drone-card" width="240" height="88" style="width:100%;height:88px"></canvas>
+      </div>
+      <div class="ic-title">UAV & Drone Forensics</div>
+      <div class="ic-desc">Evidence acquisition from embedded UAV platforms with proprietary and encrypted data sources.</div>
+    </div>
+    <div class="int-card rv" style="transition-delay:.1s">
+      <div class="ic-illo">
+        <svg viewBox="0 0 240 88" width="100%" height="88">
+          <circle cx="26" cy="20" r="6" fill="#0d1628" stroke="#38bdf8" stroke-width="1.4"/>
+          <circle cx="26" cy="44" r="6" fill="#0d1628" stroke="#38bdf8" stroke-width="1.4"/>
+          <circle cx="26" cy="68" r="6" fill="#0d1628" stroke="#38bdf8" stroke-width="1.4"/>
+          <circle cx="88" cy="14" r="6" fill="#0d1628" stroke="#818cf8" stroke-width="1.4"/>
+          <circle cx="88" cy="33" r="6" fill="#0d1628" stroke="#818cf8" stroke-width="1.4"/>
+          <circle cx="88" cy="52" r="6" fill="#0d1628" stroke="#818cf8" stroke-width="1.4"/>
+          <circle cx="88" cy="71" r="6" fill="#0d1628" stroke="#818cf8" stroke-width="1.4"/>
+          <circle cx="152" cy="24" r="6" fill="#0d1628" stroke="#2dd4bf" stroke-width="1.4"/>
+          <circle cx="152" cy="56" r="6" fill="#0d1628" stroke="#2dd4bf" stroke-width="1.4"/>
+          <circle cx="208" cy="44" r="8" fill="#38bdf8" opacity=".2" stroke="#38bdf8" stroke-width="1.4"/>
+          <line x1="32" y1="20" x2="82" y2="14" stroke="#38bdf8" stroke-width=".55" opacity=".35"/>
+          <line x1="32" y1="20" x2="82" y2="33" stroke="#38bdf8" stroke-width=".55" opacity=".35"/>
+          <line x1="32" y1="44" x2="82" y2="33" stroke="#38bdf8" stroke-width=".55" opacity=".35"/>
+          <line x1="32" y1="44" x2="82" y2="52" stroke="#38bdf8" stroke-width=".55" opacity=".35"/>
+          <line x1="32" y1="68" x2="82" y2="52" stroke="#38bdf8" stroke-width=".55" opacity=".35"/>
+          <line x1="32" y1="68" x2="82" y2="71" stroke="#38bdf8" stroke-width=".55" opacity=".35"/>
+          <line x1="94" y1="14" x2="146" y2="24" stroke="#818cf8" stroke-width=".55" opacity=".35"/>
+          <line x1="94" y1="33" x2="146" y2="24" stroke="#818cf8" stroke-width=".55" opacity=".35"/>
+          <line x1="94" y1="52" x2="146" y2="56" stroke="#818cf8" stroke-width=".55" opacity=".35"/>
+          <line x1="94" y1="71" x2="146" y2="56" stroke="#818cf8" stroke-width=".55" opacity=".35"/>
+          <line x1="158" y1="24" x2="200" y2="44" stroke="#2dd4bf" stroke-width=".7" opacity=".5"/>
+          <line x1="158" y1="56" x2="200" y2="44" stroke="#2dd4bf" stroke-width=".7" opacity=".5"/>
+          <circle r="4"><animateMotion dur="1.8s" repeatCount="indefinite" path="M26,44 L88,33 L152,24 L208,44"/><animate attributeName="fill" values="#38bdf8;#818cf8;#2dd4bf;#38bdf8" dur="1.8s" repeatCount="indefinite"/></circle>
+          <circle r="3" fill="#818cf8"><animateMotion dur="2.4s" repeatCount="indefinite" begin=".6s" path="M26,68 L88,52 L152,56 L208,44"/></circle>
+        </svg>
+      </div>
+      <div class="ic-title">ML for Forensic Analysis</div>
+      <div class="ic-desc">Supervised & unsupervised learning for anomaly detection and event reconstruction.</div>
+    </div>
+    <div class="int-card rv" style="transition-delay:.2s">
+      <div class="ic-illo">
+        <svg viewBox="0 0 240 88" width="100%" height="88">
+          <rect x="10" y="8" width="130" height="72" rx="7" fill="#0d1628" stroke="#38bdf8" stroke-width="1.2"/>
+          <g font-family="monospace" font-size="8" fill="#38bdf8" opacity=".4">
+            <text x="18" y="26">01001000 10110</text>
+            <text x="18" y="38">11010101 00101</text>
+            <text x="18" y="50">00110010 11001</text>
+            <text x="18" y="62">10011101 01110</text>
+            <text x="18" y="74">11100010 10001</text>
+          </g>
+          <rect x="10" y="8" width="130" height="5" fill="#38bdf8" opacity=".12">
+            <animate attributeName="y" values="8;72;8" dur="2.6s" repeatCount="indefinite"/>
+          </rect>
+          <rect x="18" y="45" width="90" height="9" rx="2" fill="#2dd4bf" opacity=".1">
+            <animate attributeName="opacity" values=".1;.28;.1" dur="1.5s" repeatCount="indefinite"/>
+          </rect>
+          <circle cx="192" cy="44" r="26" fill="none" stroke="#f472b6" stroke-width="2.5"/>
+          <circle cx="192" cy="44" r="26" fill="rgba(244,114,182,.04)"/>
+          <line x1="211" y1="63" x2="228" y2="80" stroke="#f472b6" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="187" cy="40" r="9" fill="none" stroke="#f472b6" stroke-width="1">
+            <animate attributeName="r" values="7;13;7" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values=".8;.25;.8" dur="2s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+      <div class="ic-title">Digital Forensics</div>
+      <div class="ic-desc">Incident response, anti-forensic mitigation, and forensically sound evidence recovery.</div>
+    </div>
+    <div class="int-card rv" style="transition-delay:.3s">
+      <div class="ic-illo">
+        <svg viewBox="0 0 240 88" width="100%" height="88">
+          <rect x="6" y="5" width="228" height="78" rx="9" fill="#070d1a" stroke="#2dd4bf" stroke-width="1.2"/>
+          <rect x="6" y="5" width="228" height="20" rx="9" fill="#0d1628"/>
+          <rect x="6" y="17" width="228" height="8" fill="#0d1628"/>
+          <circle cx="22" cy="15" r="4" fill="#f472b6" opacity=".9"/>
+          <circle cx="36" cy="15" r="4" fill="#fbbf24" opacity=".9"/>
+          <circle cx="50" cy="15" r="4" fill="#2dd4bf" opacity=".9"/>
+          <text x="12" y="38" font-family="monospace" font-size="8" fill="#2dd4bf">$ ./capture_flag.sh</text>
+          <text x="12" y="52" font-family="monospace" font-size="8" fill="#38bdf8">FLAG{uav_f0r3ns1cs!}</text>
+          <text x="12" y="66" font-family="monospace" font-size="7.5" fill="#818cf8" opacity=".8">✓ Solved! Time: 04:23</text>
+          <text x="12" y="79" font-family="monospace" font-size="7.5" fill="#a3e635" opacity=".7">Score: +500 pts</text>
+          <rect x="206" y="73" width="5" height="8" fill="#2dd4bf">
+            <animate attributeName="opacity" values=".9;0;.9" dur="1s" repeatCount="indefinite"/>
+          </rect>
+        </svg>
+      </div>
+      <div class="ic-title">CTF-Based Pedagogy</div>
+      <div class="ic-desc">Designing capture-the-flag competitions as hands-on cybersecurity learning environments.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SKILLS ══════════ -->
+<section id="skills">
+  <div class="sh"><span class="sn">04 /</span><h2 class="st">Skills</h2><div class="sl"></div></div>
+  <div class="skills-layout">
+    <div class="skill-groups">
+      <div class="sg rv"><div class="sg-title">Teaching & Research</div><div class="tags"><span class="tag">Course Design</span><span class="tag">OBE Principles</span><span class="tag">Student Mentoring</span><span class="tag">Assessment Design</span><span class="tag">CTF Design</span><span class="tag">Syllabus Revision</span></div></div>
+      <div class="sg rv" style="transition-delay:.1s"><div class="sg-title">Cybersecurity</div><div class="tags"><span class="tag">Digital Forensics</span><span class="tag">Incident Response</span><span class="tag">Network Security</span><span class="tag">Threat Analysis</span><span class="tag">UAV Forensics</span><span class="tag">Anti-Forensics</span></div></div>
+      <div class="sg rv" style="transition-delay:.2s"><div class="sg-title">Tools & Platforms</div><div class="tags"><span class="tag">Linux</span><span class="tag">Wireshark</span><span class="tag">Nmap</span><span class="tag">VirtualBox</span><span class="tag">TryHackMe</span><span class="tag">Cyber Ranges</span></div></div>
+      <div class="sg rv" style="transition-delay:.3s"><div class="sg-title">Programming</div><div class="tags"><span class="tag">Python</span><span class="tag">Java</span><span class="tag">Bash Scripting</span></div></div>
+      <div class="sg rv" style="transition-delay:.4s"><div class="sg-title">Quality & Admin</div><div class="tags"><span class="tag">NAAC Documentation</span><span class="tag">IQAC</span><span class="tag">Academic Audits</span><span class="tag">ERP Coordination</span></div></div>
+    </div>
+    <div style="position:sticky;top:8rem">
+      <p style="font-size:.6rem;color:var(--mu2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.8rem">Competency Radar</p>
+      <canvas id="radar-c" width="280" height="280" style="display:block"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EDUCATION ══════════ -->
+<section id="education">
+  <div class="sh"><span class="sn">05 /</span><h2 class="st">Education</h2><div class="sl"></div></div>
+  <div class="edu-layout">
+    <div>
+      <div class="edu-card-item rv">
+        <div class="edu-yr">2024 – 2027 (Expected)</div>
+        <div class="edu-deg">Ph.D. Computer Science</div>
+        <div class="edu-sp">Cybersecurity · UAV Forensics · ML</div>
+        <div class="edu-ins">D.Y. Patil International University, Pune</div>
+        <span class="edu-badge">● Pursuing</span>
+      </div>
+      <div class="edu-card-item rv" style="transition-delay:.15s">
+        <div class="edu-yr">2021 – 2023</div>
+        <div class="edu-deg">MCA — Cybersecurity</div>
+        <div class="edu-sp">Master of Computer Applications</div>
+        <div class="edu-ins">D.Y. Patil International University, Pune</div>
+      </div>
+      <div class="edu-card-item rv" style="transition-delay:.3s">
+        <div class="edu-yr">2018 – 2021</div>
+        <div class="edu-deg">BCA — Information Technology</div>
+        <div class="edu-sp">Bachelor of Computer Applications</div>
+        <div class="edu-ins">Institute of Management Studies, Noida</div>
+      </div>
+    </div>
+    <div class="rv" style="transition-delay:.25s">
+      <canvas id="edu-chart" width="660" height="360" style="border-radius:12px;border:1px solid rgba(56,189,248,.1);display:block;max-width:100%"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ PROJECTS ══════════ -->
+<section id="projects">
+  <div class="sh"><span class="sn">06 /</span><h2 class="st">Projects</h2><div class="sl"></div></div>
+  <div class="proj-grid">
+    <div class="pcard rv">
+      <div class="pill"><canvas id="proj1" width="420" height="76" style="width:100%;height:76px"></canvas></div>
+      <div class="pnum">01 / Academic Systems</div>
+      <div class="ptitle">DYPIU-IPO Internship & Elective Portal</div>
+      <div class="pdesc">Integrated platform for internship management and elective selection, streamlining university administrative workflows.</div>
+    </div>
+    <div class="pcard rv" style="transition-delay:.1s">
+      <div class="pill"><canvas id="proj2" width="420" height="76" style="width:100%;height:76px"></canvas></div>
+      <div class="pnum">02 / NLP & Computer Vision</div>
+      <div class="ptitle">OCR-Based Certificate Verification</div>
+      <div class="pdesc">Automated certificate authentication using NLP and image processing achieving 98%+ accuracy.</div>
+    </div>
+    <div class="pcard rv" style="transition-delay:.2s">
+      <div class="pill"><canvas id="proj3" width="420" height="76" style="width:100%;height:76px"></canvas></div>
+      <div class="pnum">03 / Cryptography</div>
+      <div class="ptitle">ModCrypt — Custom Encryption Algorithm</div>
+      <div class="pdesc">Novel custom encryption algorithm covering design, implementation, and comprehensive security evaluation.</div>
+    </div>
+    <div class="pcard rv" style="transition-delay:.3s">
+      <div class="pill"><canvas id="proj4" width="420" height="76" style="width:100%;height:76px"></canvas></div>
+      <div class="pnum">04 / Automation</div>
+      <div class="ptitle">Examination Result Processing Automation</div>
+      <div class="pdesc">Automated result processing pipelines, reducing manual effort and error rates significantly.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section id="contact">
+  <div class="cring" style="width:300px;height:300px;border-color:rgba(56,189,248,.08);animation-duration:4s"></div>
+  <div class="cring" style="width:520px;height:520px;border-color:rgba(129,140,248,.05);animation-duration:6s;animation-delay:1s"></div>
+  <div class="ci">
+    <h2 class="cbig rv">Let's <span>Connect</span></h2>
+    <p class="csub rv" style="transition-delay:.15s">Open to research collaborations, academic partnerships, and cybersecurity discussions. Pune, India.</p>
+    <div class="clinks rv" style="transition-delay:.3s">
+      <a href="mailto:kumarsaransh.10@gmail.com" class="clink"><span>✉</span>kumarsaransh.10@gmail.com</a>
+      <a href="tel:+918826477046" class="clink"><span>📞</span>+91-88264 77046</a>
+      <a href="#" class="clink"><span>📍</span>Pune, India</a>
+    </div>
+  </div>
+</section>
+<footer><span>© 2025 Saransh Kushwaha</span><span>Ph.D. Scholar · Cybersecurity · Educator</span></footer>
+
+<script>
+'use strict';
+
+/* ═══════════ CURSOR ═══════════ */
+const $cur=document.getElementById('cur'),
+      $curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){
+  $cur.style.left=mx+'px';$cur.style.top=my+'px';
+  rx+=(mx-rx)*.1;ry+=(my-ry)*.1;
+  $curR.style.left=rx+'px';$curR.style.top=ry+'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.int-card,.tag,.pcard,.edu-card-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{$cur.classList.add('h');$curR.classList.add('h')});
+  el.addEventListener('mouseleave',()=>{$cur.classList.remove('h');$curR.classList.remove('h')});
+});
+
+/* ═══════════ PROGRESS ═══════════ */
+const $prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{
+  $prog.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+});
+
+/* ═══════════ MATRIX RAIN ═══════════ */
+(function(){
+  const c=document.getElementById('mc');
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  const x=c.getContext('2d');
+  const cols=Math.floor(c.width/18),drops=Array(cols).fill(1);
+  const ch='01アイウカサシスタチハヒヘマミ';
+  setInterval(()=>{
+    x.fillStyle='rgba(2,4,10,.055)';x.fillRect(0,0,c.width,c.height);
+    drops.forEach((y,i)=>{
+      x.fillStyle=`rgba(56,189,248,${Math.random()*.38+.05})`;
+      x.font='13px JetBrains Mono';
+      x.fillText(ch[Math.floor(Math.random()*ch.length)],i*18,y*18);
+      if(y*18>c.height&&Math.random()>.975)drops[i]=0;
+      drops[i]++;
+    });
+  },58);
+})();
+
+/* ═══════════ SCROLL REVEAL ═══════════ */
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting)setTimeout(()=>e.target.classList.add('on'),i*55);
+  });
+},{threshold:.1});
+document.querySelectorAll('.rv,.rv2').forEach(el=>revObs.observe(el));
+
+/* ═══════════ NAV ACTIVE ═══════════ */
+const $secs=document.querySelectorAll('section[id]');
+const $nls=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  $secs.forEach(s=>{if(window.scrollY>=s.offsetTop-260)cur=s.id});
+  $nls.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+
+/* ═══════════ HERO DRONE CANVAS ═══════════ */
+(function(){
+  const c=document.getElementById('hero-drone');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=480,H=420,cx=240,cy=195;
+  const propA=[0,0,0,0],propSpd=[0.18,-0.18,-0.16,0.16];
+  const hubs=[{x:cx-90,y:cy-85,col:'#38bdf8'},{x:cx+90,y:cy-85,col:'#818cf8'},{x:cx-90,y:cy+85,col:'#818cf8'},{x:cx+90,y:cy+85,col:'#38bdf8'}];
+  const traces=[
+    [{x:20,y:160},{x:75,y:160},{x:75,y:115},{x:145,y:115}],
+    [{x:20,y:210},{x:50,y:210},{x:50,y:160}],
+    [{x:460,y:160},{x:405,y:160},{x:405,y:115},{x:335,y:115}],
+    [{x:460,y:210},{x:430,y:210},{x:430,y:250},{x:400,y:250}],
+    [{x:175,y:360},{x:175,y:395},{x:240,y:395}],
+    [{x:305,y:360},{x:305,y:395},{x:240,y:395}],
+  ];
+  const pkts=[
+    {path:0,t:0,spd:.014,col:'#38bdf8'},
+    {path:2,t:.35,spd:.011,col:'#818cf8'},
+    {path:4,t:.6,spd:.015,col:'#2dd4bf'},
+  ];
+  function ptOn(pts,f){
+    const s=Math.min(Math.floor(f*(pts.length-1)),pts.length-2);
+    const fr=f*(pts.length-1)-s;
+    return{x:pts[s].x+(pts[s+1].x-pts[s].x)*fr,y:pts[s].y+(pts[s+1].y-pts[s].y)*fr};
+  }
+  function rRect(ctx,x,y,w,h,r){
+    ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+    ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);
+    ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+  }
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // grid
+    ctx.strokeStyle='rgba(56,189,248,.03)';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+    for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+    // glow
+    const g=ctx.createRadialGradient(cx,cy,10,cx,cy,200);
+    g.addColorStop(0,'rgba(56,189,248,.08)');g.addColorStop(1,'transparent');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    // circuit traces
+    traces.forEach(p=>{
+      ctx.beginPath();ctx.moveTo(p[0].x,p[0].y);
+      p.slice(1).forEach(pt=>ctx.lineTo(pt.x,pt.y));
+      ctx.strokeStyle='rgba(56,189,248,.17)';ctx.lineWidth=1;ctx.stroke();
+      p.forEach(pt=>{ctx.beginPath();ctx.arc(pt.x,pt.y,2.2,0,Math.PI*2);ctx.fillStyle='rgba(56,189,248,.35)';ctx.fill()});
+    });
+    // data packets
+    pkts.forEach(pk=>{
+      pk.t=(pk.t+pk.spd)%1;
+      const p=ptOn(traces[pk.path],pk.t);
+      ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);
+      ctx.fillStyle=pk.col;ctx.shadowBlur=8;ctx.shadowColor=pk.col;ctx.fill();ctx.shadowBlur=0;
+    });
+    // arms
+    hubs.forEach(h=>{
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(h.x,h.y);
+      const lg=ctx.createLinearGradient(cx,cy,h.x,h.y);
+      lg.addColorStop(0,'rgba(56,189,248,.9)');lg.addColorStop(1,'rgba(56,189,248,.35)');
+      ctx.strokeStyle=lg;ctx.lineWidth=3;ctx.stroke();
+    });
+    // body
+    ctx.save();
+    rRect(ctx,cx-38,cy-28,76,56,10);ctx.fillStyle='#0d1628';ctx.fill();
+    ctx.strokeStyle='#38bdf8';ctx.lineWidth=1.5;rRect(ctx,cx-38,cy-28,76,56,10);ctx.stroke();
+    ctx.strokeStyle='rgba(56,189,248,.18)';ctx.lineWidth=1;rRect(ctx,cx-28,cy-20,56,40,6);ctx.stroke();
+    // camera
+    ctx.beginPath();ctx.arc(cx,cy+18,11,0,Math.PI*2);ctx.fillStyle='#070d1a';ctx.fill();
+    ctx.strokeStyle='#2dd4bf';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy+18,5.5,0,Math.PI*2);ctx.fillStyle='rgba(45,212,191,.45)';ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy+18,2.5,0,Math.PI*2);ctx.fillStyle='#2dd4bf';ctx.fill();
+    // SK label
+    ctx.fillStyle='#38bdf8';ctx.font='bold 10px Syne,sans-serif';ctx.textAlign='center';ctx.fillText('SK',cx,cy+3);
+    // LED
+    const la=.5+.5*Math.sin(t*.09);
+    ctx.beginPath();ctx.arc(cx+25,cy-18,3.5,0,Math.PI*2);
+    ctx.fillStyle=`rgba(45,212,191,${la})`;ctx.shadowBlur=7;ctx.shadowColor='#2dd4bf';ctx.fill();ctx.shadowBlur=0;
+    ctx.restore();
+    // propellers - clean 2-blade ellipse
+    hubs.forEach((h,i)=>{
+      ctx.save();ctx.translate(h.x,h.y);
+      // hub ring
+      ctx.beginPath();ctx.arc(0,0,11,0,Math.PI*2);ctx.fillStyle='#0d1628';ctx.fill();
+      ctx.strokeStyle=h.col;ctx.lineWidth=1.6;ctx.stroke();
+      // spin
+      ctx.rotate(propA[i]);
+      ctx.fillStyle=h.col;ctx.globalAlpha=.82;
+      ctx.beginPath();ctx.ellipse(0,-28,5,18,0,0,Math.PI*2);ctx.fill();
+      ctx.rotate(Math.PI);
+      ctx.beginPath();ctx.ellipse(0,-28,5,18,0,0,Math.PI*2);ctx.fill();
+      ctx.globalAlpha=1;
+      ctx.beginPath();ctx.arc(0,0,5,0,Math.PI*2);ctx.fillStyle=h.col;ctx.fill();
+      propA[i]+=propSpd[i];
+      ctx.restore();
+    });
+    // scan beam
+    const sa=.25+.12*Math.sin(t*.05),sw=42+16*Math.sin(t*.04);
+    ctx.beginPath();ctx.ellipse(cx,cy+100,sw,10,0,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(56,189,248,${sa})`;ctx.lineWidth=1;ctx.setLineDash([4,5]);ctx.stroke();ctx.setLineDash([]);
+    ctx.beginPath();ctx.moveTo(cx,cy+30);ctx.lineTo(cx,cy+93);
+    ctx.strokeStyle=`rgba(56,189,248,${sa*.6})`;ctx.lineWidth=1;ctx.setLineDash([3,4]);ctx.stroke();ctx.setLineDash([]);
+    // labels
+    ctx.font='8.5px JetBrains Mono';
+    ctx.fillStyle='rgba(56,189,248,.45)';ctx.textAlign='left';ctx.fillText('forensics.py',18,92);
+    ctx.fillStyle='rgba(129,140,248,.45)';ctx.textAlign='right';ctx.fillText('uav_scan()',462,92);
+    ctx.fillStyle='rgba(45,212,191,.45)';ctx.textAlign='center';ctx.fillText('evidence.log',cx,412);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ═══════════ ORBIT CANVAS ═══════════
+   PhD fixed center, 9 nodes across 3 rings, clean
+══════════════════════════════════════ */
+(function(){
+  const c=document.getElementById('orbit-canvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=540,H=540,cx=270,cy=270;
+
+  const rings=[
+    // ring 1 r=95 fast — 2 nodes
+    {r:95,  spd:0.022, nodes:[
+      {a:0,          label:'UAV',       sub:'Drone Forensics', col:'#38bdf8', nr:26},
+      {a:Math.PI,    label:'Embedded',  sub:'Systems/ARM',     col:'#38bdf8', nr:26},
+    ]},
+    // ring 2 r=150 medium — 3 nodes
+    {r:150, spd:0.012, nodes:[
+      {a:0.4,                 label:'ML Models', sub:'Anomaly Det.',   col:'#818cf8', nr:28},
+      {a:0.4+Math.PI*2/3,     label:'CTF Labs',  sub:'20+ Exercises',  col:'#818cf8', nr:28},
+      {a:0.4+Math.PI*4/3,     label:'Education', sub:'OBE · NEP 2020', col:'#818cf8', nr:28},
+    ]},
+    // ring 3 r=205 slow — 4 nodes
+    {r:205, spd:0.006, nodes:[
+      {a:1.0,                 label:'Research',  sub:'DYPIU 2024–27',  col:'#2dd4bf', nr:30},
+      {a:1.0+Math.PI/2,       label:'Forensics', sub:'Evidence Rec.',  col:'#2dd4bf', nr:30},
+      {a:1.0+Math.PI,         label:'Security',  sub:'Network & IR',   col:'#2dd4bf', nr:30},
+      {a:1.0+Math.PI*3/2,     label:'Mentoring', sub:'30+ Students',   col:'#f472b6', nr:30},
+    ]},
+  ];
+  const stats=[
+    {bx:55, by:100, val:'2+',  lbl:'Yrs Exp',  col:'#38bdf8'},
+    {bx:485,by:100, val:'30+', lbl:'Students', col:'#818cf8'},
+    {bx:55, by:445, val:'20+', lbl:'Lab Mods', col:'#2dd4bf'},
+    {bx:485,by:445, val:'4',   lbl:'Roles',    col:'#f472b6'},
+  ];
+  const ringColors=['rgba(56,189,248,.2)','rgba(129,140,248,.15)','rgba(45,212,191,.11)'];
+  const ringDash=[[5,7],[4,9],[3,11]];
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // bg
+    ctx.fillStyle='#070d1a';ctx.fillRect(0,0,W,H);
+    const bg=ctx.createRadialGradient(cx,cy,10,cx,cy,230);
+    bg.addColorStop(0,'rgba(56,189,248,.06)');bg.addColorStop(1,'transparent');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+    // orbit rings
+    rings.forEach((ring,ri)=>{
+      ctx.beginPath();ctx.arc(cx,cy,ring.r,0,Math.PI*2);
+      ctx.strokeStyle=ringColors[ri];ctx.lineWidth=1;
+      ctx.setLineDash(ringDash[ri]);ctx.stroke();ctx.setLineDash([]);
+    });
+
+    // orbiting nodes
+    rings.forEach(ring=>{
+      ring.nodes.forEach(nd=>{
+        nd.a+=ring.spd;
+        const nx=cx+ring.r*Math.cos(nd.a);
+        const ny=cy+ring.r*Math.sin(nd.a);
+        // spoke
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(nx,ny);
+        ctx.strokeStyle=nd.col+'18';ctx.lineWidth=1;ctx.stroke();
+        // halo
+        const gl=ctx.createRadialGradient(nx,ny,0,nx,ny,nd.nr+12);
+        gl.addColorStop(0,nd.col+'26');gl.addColorStop(1,'transparent');
+        ctx.fillStyle=gl;ctx.beginPath();ctx.arc(nx,ny,nd.nr+12,0,Math.PI*2);ctx.fill();
+        // circle
+        ctx.beginPath();ctx.arc(nx,ny,nd.nr,0,Math.PI*2);
+        ctx.fillStyle='#0d1628';ctx.fill();
+        ctx.strokeStyle=nd.col;ctx.lineWidth=1.6;ctx.stroke();
+        // text
+        ctx.fillStyle=nd.col;
+        ctx.font=`bold ${nd.nr<28?10:11}px Syne,sans-serif`;
+        ctx.textAlign='center';
+        ctx.fillText(nd.label,nx,ny-1);
+        ctx.fillStyle='rgba(226,232,240,.5)';
+        ctx.font='7.5px JetBrains Mono';
+        ctx.fillText(nd.sub,nx,ny+10);
+      });
+    });
+
+    // center PhD node — clean, informative
+    const cg=ctx.createRadialGradient(cx,cy,5,cx,cy,55);
+    cg.addColorStop(0,'rgba(56,189,248,.2)');cg.addColorStop(1,'transparent');
+    ctx.fillStyle=cg;ctx.beginPath();ctx.arc(cx,cy,55,0,Math.PI*2);ctx.fill();
+    // dashed outer ring
+    ctx.beginPath();ctx.arc(cx,cy,50,0,Math.PI*2);
+    ctx.strokeStyle='rgba(56,189,248,.32)';ctx.lineWidth=1.5;ctx.setLineDash([6,5]);ctx.stroke();ctx.setLineDash([]);
+    // solid inner
+    ctx.beginPath();ctx.arc(cx,cy,44,0,Math.PI*2);
+    ctx.fillStyle='#0a0f1e';ctx.fill();
+    ctx.strokeStyle='#38bdf8';ctx.lineWidth=2;ctx.stroke();
+    // text
+    ctx.fillStyle='#38bdf8';ctx.font='bold 14px Syne,sans-serif';ctx.textAlign='center';ctx.fillText('Ph.D',cx,cy-7);
+    ctx.fillStyle='rgba(226,232,240,.75)';ctx.font='8px JetBrains Mono';ctx.fillText('Computer Science',cx,cy+5);
+    ctx.fillStyle='rgba(56,189,248,.55)';ctx.font='7.5px JetBrains Mono';ctx.fillText('DYPIU · 2024',cx,cy+17);
+
+    // stat bubbles
+    stats.forEach(s=>{
+      const sg=ctx.createRadialGradient(s.bx,s.by,0,s.bx,s.by,40);
+      sg.addColorStop(0,s.col+'16');sg.addColorStop(1,'transparent');
+      ctx.fillStyle=sg;ctx.beginPath();ctx.arc(s.bx,s.by,40,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(s.bx,s.by,32,0,Math.PI*2);
+      ctx.fillStyle='#0d1628';ctx.fill();ctx.strokeStyle=s.col;ctx.lineWidth=1.2;ctx.stroke();
+      ctx.fillStyle=s.col;ctx.font='bold 17px Syne,sans-serif';ctx.textAlign='center';ctx.fillText(s.val,s.bx,s.by+5);
+      ctx.fillStyle='#64748b';ctx.font='7.5px JetBrains Mono';ctx.fillText(s.lbl,s.bx,s.by+17);
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ═══════════ CAREER GROWTH CHART ═══════════ */
+(function(){
+  const c=document.getElementById('growth-chart');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=480,H=320;
+  const data=[
+    {yr:'Nov 2022',students:8, labs:4, proj:1},
+    {yr:'Jan 2024',students:22,labs:14,proj:2},
+    {yr:'Aug 2024',students:38,labs:24,proj:4},
+    {yr:'Jul 2025',students:55,labs:30,proj:6},
+    {yr:'Now',     students:72,labs:38,proj:8},
+  ];
+  const pad={l:52,r:18,t:30,b:58};
+  const gW=W-pad.l-pad.r,gH=H-pad.t-pad.b;
+  const maxV=80;
+  const series=[
+    {key:'students',col:'#38bdf8',lbl:'Students Mentored'},
+    {key:'labs',    col:'#818cf8',lbl:'Lab Modules'},
+    {key:'proj',    col:'#2dd4bf',lbl:'Projects (×8)',  scale:8},
+  ];
+  let prog=0;
+  function xP(i){return pad.l+i*(gW/(data.length-1))}
+  function yP(v,sc){return pad.t+gH-(v*(sc||1)/maxV)*gH}
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#070d1a';ctx.fillRect(0,0,W,H);
+    // grid
+    [0,.25,.5,.75,1].forEach(f=>{
+      const y=pad.t+gH*f;
+      ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);
+      ctx.strokeStyle='rgba(56,189,248,.07)';ctx.lineWidth=1;ctx.stroke();
+      ctx.fillStyle='#475569';ctx.font='8px JetBrains Mono';ctx.textAlign='right';
+      ctx.fillText(Math.round(maxV*(1-f)),pad.l-5,y+3);
+    });
+    data.forEach((d,i)=>{
+      const x=xP(i);
+      ctx.beginPath();ctx.moveTo(x,pad.t+gH);ctx.lineTo(x,pad.t+gH+5);
+      ctx.strokeStyle='rgba(56,189,248,.18)';ctx.lineWidth=1;ctx.stroke();
+      ctx.fillStyle='#475569';ctx.font='7.5px JetBrains Mono';ctx.textAlign='center';
+      ctx.fillText(d.yr,x,H-pad.b+18);
+    });
+    const ei=Math.min(data.length-1,Math.floor(prog*(data.length-1)));
+    const ef=(prog*(data.length-1))-ei;
+    series.forEach(s=>{
+      const pts=data.map((d,i)=>({x:xP(i),y:yP(d[s.key],s.scale)}));
+      // area
+      ctx.save();ctx.beginPath();ctx.moveTo(pts[0].x,pad.t+gH);
+      for(let i=0;i<=ei;i++)ctx.lineTo(pts[i].x,pts[i].y);
+      if(ei<data.length-1){
+        const px=pts[ei].x+(pts[ei+1].x-pts[ei].x)*ef;
+        const py=pts[ei].y+(pts[ei+1].y-pts[ei].y)*ef;
+        ctx.lineTo(px,py);ctx.lineTo(px,pad.t+gH);
+      } else ctx.lineTo(pts[ei].x,pad.t+gH);
+      ctx.closePath();
+      const ag=ctx.createLinearGradient(0,pad.t,0,pad.t+gH);
+      ag.addColorStop(0,s.col+'28');ag.addColorStop(1,s.col+'05');
+      ctx.fillStyle=ag;ctx.fill();ctx.restore();
+      // line
+      ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);
+      for(let i=1;i<=ei;i++)ctx.lineTo(pts[i].x,pts[i].y);
+      if(ei<data.length-1){
+        const px=pts[ei].x+(pts[ei+1].x-pts[ei].x)*ef;
+        const py=pts[ei].y+(pts[ei+1].y-pts[ei].y)*ef;
+        ctx.lineTo(px,py);
+      }
+      ctx.strokeStyle=s.col;ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.stroke();
+      for(let i=0;i<=ei;i++){
+        ctx.beginPath();ctx.arc(pts[i].x,pts[i].y,4.5,0,Math.PI*2);
+        ctx.fillStyle='#070d1a';ctx.fill();ctx.strokeStyle=s.col;ctx.lineWidth=2;ctx.stroke();
+      }
+    });
+    // legend
+    series.forEach((s,i)=>{
+      ctx.fillStyle=s.col;ctx.fillRect(pad.l+i*130,H-16,10,4);
+      ctx.fillStyle='#64748b';ctx.font='7.5px JetBrains Mono';ctx.textAlign='left';
+      ctx.fillText(s.lbl,pad.l+i*130+14,H-12);
+    });
+    ctx.fillStyle='rgba(56,189,248,.55)';ctx.font='bold 9px Syne,sans-serif';ctx.textAlign='left';
+    ctx.fillText('CAREER GROWTH',pad.l,18);
+    if(prog<1){prog=Math.min(1,prog+.014);requestAnimationFrame(draw)}
+  }
+  new IntersectionObserver(e=>{if(e[0].isIntersecting){prog=0;draw()}},{threshold:.3}).observe(c);
+})();
+
+/* ═══════════ MINDMAP ═══════════ */
+(function(){
+  const MM={
+    branches:[
+      {label:'Teaching',    col:'#38bdf8', a:-1.73,
+        subs:['OBE Design','CTF Labs','20+ Modules','30+ Students','Lesson Plans','CO-PO Map']},
+      {label:'Research',    col:'#818cf8', a:-0.31,
+        subs:['UAV Forensics','ML Models','Ph.D 2027','Publications','Hybrid Framework','Benchmark']},
+      {label:'Admin',       col:'#2dd4bf', a:1.10,
+        subs:['ERP Coord','IQAC','NAAC Docs','R&D Head','CIE Process','Web & Social']},
+      {label:'Projects',    col:'#f472b6', a:2.67,
+        subs:['IPO Portal','ModCrypt','OCR Cert','Exam Auto']},
+      {label:'Cybersecurity',col:'#fbbf24',a:-3.30,
+        subs:['Pen Testing','Incident Resp','Wireshark','TryHackMe','Nmap','CTF Design']},
+    ]
+  };
+
+  function renderMM(canvas,scale,animated,prog){
+    const ctx=canvas.getContext('2d');
+    const W=canvas.width,H=canvas.height,cx=W/2,cy=H/2;
+    const bDist=scale*148,sDist=scale*85;
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#070d1a';ctx.fillRect(0,0,W,H);
+    // dot grid
+    for(let x=0;x<W;x+=scale*25)for(let y=0;y<H;y+=scale*25){
+      ctx.beginPath();ctx.arc(x,y,.7,0,Math.PI*2);ctx.fillStyle='rgba(56,189,248,.05)';ctx.fill();
+    }
+    const p=animated?Math.min(1,prog):1;
+    MM.branches.forEach(b=>{
+      const bx=cx+bDist*Math.cos(b.a),by=cy+bDist*Math.sin(b.a);
+      // trunk
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+(bx-cx)*p,cy+(by-cy)*p);
+      const lg=ctx.createLinearGradient(cx,cy,bx,by);
+      lg.addColorStop(0,b.col+'55');lg.addColorStop(1,b.col+'1a');
+      ctx.strokeStyle=lg;ctx.lineWidth=scale*2.2;ctx.stroke();
+      if(p<.45)return;
+      const lp=(p-.45)/.55;
+      // branch halo
+      const bg=ctx.createRadialGradient(bx,by,0,bx,by,scale*42);
+      bg.addColorStop(0,b.col+'1f');bg.addColorStop(1,'transparent');
+      ctx.fillStyle=bg;ctx.beginPath();ctx.arc(bx,by,scale*42,0,Math.PI*2);ctx.fill();
+      // branch node
+      const nr=scale*32;
+      ctx.beginPath();ctx.arc(bx,by,nr,0,Math.PI*2);ctx.fillStyle='#0d1628';ctx.fill();
+      ctx.strokeStyle=b.col;ctx.lineWidth=scale*1.8;ctx.stroke();
+      ctx.fillStyle=b.col;ctx.font=`bold ${scale*11.5}px Syne,sans-serif`;ctx.textAlign='center';
+      ctx.fillText(b.label,bx,by+scale*4);
+      if(lp<.15)return;
+      const lp2=(lp-.15)/.85;
+      // sub-nodes
+      const tot=b.subs.length,spread=scale*(tot<=4?.88:1.15);
+      b.subs.forEach((sub,si)=>{
+        const sa=b.a+(si-(tot-1)/2)*(spread/(tot-1||1));
+        const sx=bx+sDist*Math.cos(sa),sy=by+sDist*Math.sin(sa);
+        ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx+(sx-bx)*lp2,by+(sy-by)*lp2);
+        ctx.strokeStyle=b.col+'3a';ctx.lineWidth=scale*.9;ctx.stroke();
+        if(lp2>.45){
+          ctx.beginPath();ctx.arc(sx,sy,scale*3.8,0,Math.PI*2);ctx.fillStyle=b.col;ctx.fill();
+          const ox=Math.cos(sa)*scale*15,oy=Math.sin(sa)*scale*14;
+          ctx.fillStyle='rgba(226,232,240,.72)';ctx.font=`${scale*8.5}px JetBrains Mono`;ctx.textAlign='center';
+          ctx.fillText(sub,sx+ox,sy+oy+scale*3);
+        }
+      });
+    });
+    // center
+    const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,scale*50);
+    cg.addColorStop(0,'rgba(56,189,248,.18)');cg.addColorStop(1,'transparent');
+    ctx.fillStyle=cg;ctx.beginPath();ctx.arc(cx,cy,scale*50,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(cx,cy,scale*40,0,Math.PI*2);ctx.fillStyle='#0a0f1e';ctx.fill();
+    ctx.strokeStyle='#38bdf8';ctx.lineWidth=scale*2.2;ctx.stroke();
+    ctx.fillStyle='#38bdf8';ctx.font=`bold ${scale*14}px Syne,sans-serif`;ctx.textAlign='center';ctx.fillText('Saransh',cx,cy+scale*1);
+    ctx.fillStyle='#64748b';ctx.font=`${scale*9}px JetBrains Mono`;ctx.fillText('Kushwaha',cx,cy+scale*15);
+  }
+
+  // Preview canvas
+  const preview=document.getElementById('mindmap-preview');
+  if(!preview)return;
+  function initPreview(){
+    preview.width=preview.parentElement.offsetWidth||900;
+    preview.height=300;
+    let frame=0,raf=null;
+    function animate(){
+      renderMM(preview,0.64,true,frame/90);
+      frame++;
+      if(frame<=108)raf=requestAnimationFrame(animate);
+    }
+    new IntersectionObserver(e=>{
+      if(e[0].isIntersecting){frame=0;if(raf)cancelAnimationFrame(raf);animate()}
+    },{threshold:.2}).observe(preview);
+  }
+  // Wait for layout
+  if(document.readyState==='complete')initPreview();
+  else window.addEventListener('load',initPreview);
+
+  // Modal
+  const modal=document.getElementById('mm-modal');
+  const fullC=document.getElementById('mm-full-canvas');
+  const closeBtn=document.getElementById('mm-close-btn');
+  const wrap=document.getElementById('mm-wrap');
+
+  function openModal(){
+    modal.classList.add('open');
+    document.body.style.overflow='hidden';
+    const vw=Math.min(window.innerWidth*.93,1380);
+    const vh=Math.min(window.innerHeight*.8,820);
+    fullC.width=Math.round(vw);
+    fullC.height=Math.round(vh);
+    const sc=Math.min(vw/1100,vh/660)*1.0;
+    renderMM(fullC,sc,false,1);
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.style.overflow='';
+  }
+  wrap.addEventListener('click',openModal);
+  closeBtn.addEventListener('click',closeModal);
+  modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+})();
+
+/* ═══════════ DRONE CARD (Research Interests) ═══════════ */
+(function(){
+  const c=document.getElementById('drone-card');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;
+  const cx=W/2,cy=H/2-4;
+  const arms=[{x:cx-44,y:cy-26,col:'#38bdf8',spd:.22},{x:cx+44,y:cy-26,col:'#818cf8',spd:-.22},{x:cx-44,y:cy+26,col:'#818cf8',spd:-.19},{x:cx+44,y:cy+26,col:'#38bdf8',spd:.19}];
+  const propA=[0,0,0,0];
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='rgba(56,189,248,.04)';ctx.fillRect(0,0,W,H);
+    // circuit lines
+    ctx.strokeStyle='rgba(56,189,248,.1)';ctx.lineWidth=.8;
+    ctx.beginPath();ctx.moveTo(0,cy);ctx.lineTo(cx-66,cy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(W,cy);ctx.lineTo(cx+66,cy);ctx.stroke();
+    // arms
+    arms.forEach(a=>{
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(a.x,a.y);
+      ctx.strokeStyle='rgba(56,189,248,.65)';ctx.lineWidth=2.2;ctx.stroke();
+    });
+    // body
+    ctx.beginPath();ctx.roundRect(cx-18,cy-13,36,26,5);
+    ctx.fillStyle='#0d1628';ctx.fill();ctx.strokeStyle='#38bdf8';ctx.lineWidth=1.2;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy+8,7,0,Math.PI*2);ctx.fillStyle='#070d1a';ctx.fill();ctx.strokeStyle='#2dd4bf';ctx.lineWidth=1;ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy+8,3,0,Math.PI*2);ctx.fillStyle='rgba(45,212,191,.5)';ctx.fill();
+    ctx.fillStyle='#38bdf8';ctx.font='bold 7px Syne,sans-serif';ctx.textAlign='center';ctx.fillText('SK',cx,cy+1);
+    // LED
+    ctx.beginPath();ctx.arc(cx+12,cy-8,2.5,0,Math.PI*2);
+    ctx.fillStyle=`rgba(45,212,191,${.5+.5*Math.sin(t*.1)})`;ctx.fill();
+    // propellers
+    arms.forEach((a,i)=>{
+      ctx.save();ctx.translate(a.x,a.y);
+      ctx.beginPath();ctx.arc(0,0,8,0,Math.PI*2);ctx.fillStyle='#0d1628';ctx.fill();ctx.strokeStyle=a.col;ctx.lineWidth=1.3;ctx.stroke();
+      ctx.rotate(propA[i]);
+      ctx.fillStyle=a.col;ctx.globalAlpha=.8;
+      ctx.beginPath();ctx.ellipse(0,-20,4,13,0,0,Math.PI*2);ctx.fill();
+      ctx.rotate(Math.PI);
+      ctx.beginPath();ctx.ellipse(0,-20,4,13,0,0,Math.PI*2);ctx.fill();
+      ctx.globalAlpha=1;
+      ctx.beginPath();ctx.arc(0,0,3,0,Math.PI*2);ctx.fillStyle=a.col;ctx.fill();
+      propA[i]+=a.spd;
+      ctx.restore();
+    });
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ═══════════ RADAR ═══════════ */
+(function(){
+  const c=document.getElementById('radar-c');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=280,H=280,cx=140,cy=140,R=96;
+  const sk=[{l:'Cybersec',v:.9},{l:'Teaching',v:.92},{l:'ML/AI',v:.72},{l:'Forensics',v:.88},{l:'Research',v:.82},{l:'Coding',v:.70}];
+  const n=sk.length,as=Math.PI*2/n;
+  let p=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,R);
+    bg.addColorStop(0,'rgba(56,189,248,.04)');bg.addColorStop(1,'transparent');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    [.25,.5,.75,1].forEach(f=>{
+      ctx.beginPath();
+      sk.forEach((_,i)=>{const a=i*as-Math.PI/2,px=cx+R*f*Math.cos(a),py=cy+R*f*Math.sin(a);i?ctx.lineTo(px,py):ctx.moveTo(px,py)});
+      ctx.closePath();ctx.strokeStyle='rgba(56,189,248,.1)';ctx.lineWidth=1;ctx.stroke();
+    });
+    sk.forEach((_,i)=>{
+      const a=i*as-Math.PI/2;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));
+      ctx.strokeStyle='rgba(56,189,248,.1)';ctx.lineWidth=1;ctx.stroke();
+    });
+    const p2=Math.min(1,p);
+    ctx.beginPath();
+    sk.forEach((s,i)=>{const a=i*as-Math.PI/2,vv=s.v*p2,px=cx+R*vv*Math.cos(a),py=cy+R*vv*Math.sin(a);i?ctx.lineTo(px,py):ctx.moveTo(px,py)});
+    ctx.closePath();
+    const fg=ctx.createRadialGradient(cx,cy,0,cx,cy,R);
+    fg.addColorStop(0,'rgba(56,189,248,.14)');fg.addColorStop(1,'rgba(56,189,248,.03)');
+    ctx.fillStyle=fg;ctx.fill();ctx.strokeStyle='#38bdf8';ctx.lineWidth=2;ctx.stroke();
+    sk.forEach((s,i)=>{
+      const a=i*as-Math.PI/2,vv=s.v*p2;
+      const px=cx+R*vv*Math.cos(a),py=cy+R*vv*Math.sin(a);
+      ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);ctx.fillStyle='#38bdf8';ctx.shadowBlur=7;ctx.shadowColor='#38bdf8';ctx.fill();ctx.shadowBlur=0;
+      const lx=cx+(R+22)*Math.cos(a),ly=cy+(R+22)*Math.sin(a);
+      ctx.fillStyle='#64748b';ctx.font='8.5px JetBrains Mono';ctx.textAlign='center';ctx.fillText(s.l,lx,ly+3);
+    });
+    if(p<1){p+=.022;requestAnimationFrame(draw)}
+  }
+  new IntersectionObserver(e=>{if(e[0].isIntersecting){p=0;draw()}},{threshold:.4}).observe(c);
+})();
+
+/* ═══════════ EDUCATION CHART ═══════════ */
+(function(){
+  const c=document.getElementById('edu-chart');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=660,H=360;
+  const degrees=[
+    {start:2018,end:2021,label:'BCA',sub:'Info Technology',inst:'IMS Noida',  col:'#2dd4bf'},
+    {start:2021,end:2023,label:'MCA',sub:'Cybersecurity',  inst:'DYPIU Pune', col:'#818cf8'},
+    {start:2024,end:2027,label:'Ph.D',sub:'CS — UAV & ML', inst:'DYPIU Pune', col:'#38bdf8'},
+  ];
+  const ms=[
+    {yr:2022,lbl:'TA Part-time', col:'#f472b6',row:0},
+    {yr:2023,lbl:'MCA Done',    col:'#818cf8',row:1},
+    {yr:2024,lbl:'Teach Assoc', col:'#2dd4bf',row:0},
+    {yr:2025,lbl:'Asst. Prof',  col:'#38bdf8',row:1},
+  ];
+  const sy=2017,ey=2028,tot=ey-sy;
+  const pad={l:65,r:25,t:38,b:72};
+  const gW=W-pad.l-pad.r;
+  function xY(yr){return pad.l+(yr-sy)/tot*gW}
+  let prog=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#070d1a';ctx.fillRect(0,0,W,H);
+    for(let y=sy;y<=ey;y++){
+      const x=xY(y);
+      ctx.beginPath();ctx.moveTo(x,pad.t+16);ctx.lineTo(x,H-pad.b+8);
+      ctx.strokeStyle=y%2===0?'rgba(56,189,248,.08)':'rgba(56,189,248,.03)';ctx.lineWidth=1;ctx.stroke();
+      ctx.fillStyle='#475569';ctx.font='8px JetBrains Mono';ctx.textAlign='center';ctx.fillText(y,x,H-pad.b+22);
+    }
+    ctx.fillStyle='rgba(56,189,248,.55)';ctx.font='bold 9px Syne,sans-serif';ctx.textAlign='left';
+    ctx.fillText('EDUCATION JOURNEY — Continuity of Learning',pad.l,22);
+    // now line
+    const nx=xY(2025.5);
+    ctx.beginPath();ctx.moveTo(nx,pad.t+16);ctx.lineTo(nx,H-pad.b+5);
+    ctx.strokeStyle='rgba(244,114,182,.28)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(244,114,182,.55)';ctx.font='8px JetBrains Mono';ctx.textAlign='center';ctx.fillText('NOW',nx,pad.t+12);
+    // bars
+    degrees.forEach((d,i)=>{
+      const x1=xY(d.start),x2=xY(d.start+(d.end-d.start)*Math.min(1,prog));
+      const bY=65+i*68,bH=34;
+      const gg=ctx.createLinearGradient(x1,0,xY(d.end),0);
+      gg.addColorStop(0,d.col+'16');gg.addColorStop(1,d.col+'05');
+      ctx.fillStyle=gg;ctx.fillRect(x1,bY-5,x2-x1,bH+10);
+      ctx.fillStyle=d.col+'20';ctx.fillRect(x1,bY,x2-x1,bH);
+      ctx.strokeStyle=d.col;ctx.lineWidth=1.4;ctx.strokeRect(x1,bY,x2-x1,bH);
+      ctx.fillStyle=d.col;ctx.fillRect(x1,bY,4,bH);
+      if(x2-x1>55){
+        ctx.fillStyle=d.col;ctx.font='bold 11px Syne,sans-serif';ctx.textAlign='left';ctx.fillText(d.label,x1+10,bY+14);
+        ctx.fillStyle='rgba(226,232,240,.55)';ctx.font='7.5px JetBrains Mono';ctx.fillText(d.sub,x1+10,bY+26);
+      }
+      if(x2-x1>120&&prog>.9){
+        ctx.fillStyle=d.col+'18';ctx.fillRect(xY(d.end)-78,bY+3,74,22);
+        ctx.fillStyle=d.col;ctx.font='7.5px JetBrains Mono';ctx.textAlign='center';ctx.fillText(d.inst,xY(d.end)-41,bY+17);
+      }
+      ctx.fillStyle=d.col+'75';ctx.font='7px JetBrains Mono';ctx.textAlign='center';ctx.fillText(d.start,x1,bY-2);
+      if(prog>=1)ctx.fillText(d.end+(d.label==='Ph.D'?'*':''),xY(d.end),bY-2);
+    });
+    // connectors
+    if(prog>=.88){
+      [[0,1],[1,2]].forEach(([a,b])=>{
+        const da=degrees[a],db=degrees[b];
+        const ax2=xY(da.end),ay2=65+a*68+17;
+        const bx1=xY(db.start),by1=65+b*68+17;
+        const mx=(ax2+bx1)/2;
+        ctx.beginPath();ctx.moveTo(ax2,ay2);ctx.bezierCurveTo(mx,ay2,mx,by1,bx1,by1);
+        const gl=ctx.createLinearGradient(ax2,0,bx1,0);
+        gl.addColorStop(0,da.col+'55');gl.addColorStop(1,db.col+'55');
+        ctx.strokeStyle=gl;ctx.lineWidth=1.8;ctx.setLineDash([3,4]);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=db.col;ctx.beginPath();ctx.moveTo(bx1,by1-4);ctx.lineTo(bx1+7,by1);ctx.lineTo(bx1,by1+4);ctx.closePath();ctx.fill();
+      });
+    }
+    // milestones
+    ms.forEach(m=>{
+      const x=xY(m.yr),y=H-pad.b+30+(m.row?14:0);
+      ctx.beginPath();ctx.moveTo(x,H-pad.b+5);ctx.lineTo(x,y-5);
+      ctx.strokeStyle=m.col+'65';ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.arc(x,y,4.5,0,Math.PI*2);ctx.fillStyle=m.col;ctx.fill();
+      ctx.fillStyle=m.col;ctx.font='7px JetBrains Mono';ctx.textAlign='center';ctx.fillText(m.lbl,x,y+13);
+    });
+    ctx.fillStyle='rgba(56,189,248,.3)';ctx.font='6.5px JetBrains Mono';ctx.textAlign='left';
+    ctx.fillText('* Expected 2027',xY(2027)+4,65+2*68+27);
+    if(prog<1){prog+=.016;requestAnimationFrame(draw)}
+  }
+  new IntersectionObserver(e=>{if(e[0].isIntersecting){prog=0;draw()}},{threshold:.3}).observe(c);
+})();
+
+/* ═══════════ PROJECT CANVASES ═══════════ */
+// P1: IPO portal
+(function(){
+  const c=document.getElementById('proj1');if(!c)return;
+  const ctx=c.getContext('2d');const W=c.width,H=c.height;
+  const rows=['S00123 | Forensics Lab  | ✓ Active','S00124 | ML Model Proj  | ✓ Active','S00125 | Pen-Test Lab   | ⟳ Pending'];
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#070d1a';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#0d1628';ctx.fillRect(0,0,W,15);
+    ctx.fillStyle='#818cf8';ctx.font='7px JetBrains Mono';ctx.textAlign='left';ctx.fillText('student_id | project        | status',6,11);
+    ctx.strokeStyle='rgba(129,140,248,.2)';ctx.lineWidth=1;ctx.strokeRect(0,0,W,H);
+    rows.forEach((r,i)=>{
+      const y=26+i*16,active=i===(Math.floor(t/45)%3);
+      if(active){ctx.fillStyle='rgba(56,189,248,.08)';ctx.fillRect(0,y-10,W,14)}
+      ctx.fillStyle=active?'#38bdf8':'#64748b';ctx.font='7px JetBrains Mono';ctx.fillText(r,6,y);
+    });
+    if(Math.floor(t/22)%2===0){const y=26+(Math.floor(t/45)%3)*16;ctx.fillStyle='#38bdf8';ctx.fillRect(W-14,y-9,5,9)}
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+// P2: OCR scan
+(function(){
+  const c=document.getElementById('proj2');if(!c)return;
+  const ctx=c.getContext('2d');const W=c.width,H=c.height;
+  let sy=0,sd=1,t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#070d1a';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#0d1628';ctx.fillRect(6,5,185,66);ctx.strokeStyle='rgba(56,189,248,.22)';ctx.lineWidth=1;ctx.strokeRect(6,5,185,66);
+    ['CERTIFICATE OF ACHIEVEMENT','Awarded: Saransh Kushwaha','Course: Cybersecurity'].forEach((l,i)=>{
+      ctx.fillStyle='rgba(56,189,248,.32)';ctx.font='6.5px JetBrains Mono';ctx.textAlign='left';ctx.fillText(l,12,20+i*15)});
+    ctx.fillStyle='rgba(56,189,248,.18)';ctx.fillRect(6,5+sy,185,5);
+    ctx.strokeStyle='rgba(56,189,248,.55)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(6,5+sy+2);ctx.lineTo(191,5+sy+2);ctx.stroke();
+    sy+=sd*1.1;if(sy>62||sy<0)sd*=-1;
+    ctx.fillStyle='#38bdf8';ctx.font='13px JetBrains Mono';ctx.textAlign='center';ctx.fillText('→',218,42);
+    ctx.fillStyle='#0d1628';ctx.fillRect(238,8,172,58);ctx.strokeStyle='rgba(45,212,191,.28)';ctx.lineWidth=1;ctx.strokeRect(238,8,172,58);
+    ctx.fillStyle='#2dd4bf';ctx.font='8px Syne,sans-serif';ctx.textAlign='left';ctx.fillText('✓ CERTIFICATE VERIFIED',244,26);
+    ctx.fillStyle='rgba(56,189,248,.5)';ctx.font='7px JetBrains Mono';ctx.fillText('Name: Saransh Kushwaha',244,39);
+    ctx.fillStyle='rgba(45,212,191,.55)';ctx.fillText(`Confidence: ${94+Math.floor(Math.sin(t*.04)*4)}%`,244,52);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+// P3: ModCrypt
+(function(){
+  const c=document.getElementById('proj3');if(!c)return;
+  const ctx=c.getContext('2d');const W=c.width,H=c.height;
+  let t=0;const cipher='X9kM#2@pQr!';const glyphs='!@#$%^&*01XYZ';
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#070d1a';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#0d1628';ctx.fillRect(5,14,135,50);ctx.strokeStyle='rgba(56,189,248,.18)';ctx.lineWidth=1;ctx.strokeRect(5,14,135,50);
+    ctx.fillStyle='rgba(56,189,248,.4)';ctx.font='6.5px JetBrains Mono';ctx.textAlign='left';ctx.fillText('PLAINTEXT',9,28);
+    ctx.fillStyle='#38bdf8';ctx.font='bold 10px JetBrains Mono';ctx.fillText('HELLO WORLD',9,48);
+    const kx=210,ky=38;
+    ctx.save();ctx.translate(kx,ky);ctx.rotate(t*.025);
+    ctx.strokeStyle='rgba(244,114,182,.65)';ctx.lineWidth=1.8;
+    for(let i=0;i<8;i++){const a=i*Math.PI/4;ctx.beginPath();ctx.moveTo(Math.cos(a)*16,Math.sin(a)*16);ctx.lineTo(Math.cos(a)*23,Math.sin(a)*23);ctx.stroke()}
+    ctx.beginPath();ctx.arc(0,0,14,0,Math.PI*2);ctx.strokeStyle='rgba(244,114,182,.4)';ctx.stroke();ctx.restore();
+    ctx.fillStyle='rgba(244,114,182,.65)';ctx.font='6.5px JetBrains Mono';ctx.textAlign='center';ctx.fillText('ModCrypt',kx,ky+36);
+    ctx.fillStyle='#0d1628';ctx.fillRect(280,14,132,50);ctx.strokeStyle='rgba(244,114,182,.22)';ctx.lineWidth=1;ctx.strokeRect(280,14,132,50);
+    ctx.fillStyle='rgba(244,114,182,.4)';ctx.font='6.5px JetBrains Mono';ctx.textAlign='left';ctx.fillText('CIPHERTEXT',284,28);
+    const disp=cipher.split('').map((_,i)=>Math.random()>.93?glyphs[Math.floor(Math.random()*glyphs.length)]:cipher[i]).join('');
+    ctx.fillStyle='#f472b6';ctx.font='bold 10px JetBrains Mono';ctx.fillText(disp,284,48);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+// P4: Exam pipeline
+(function(){
+  const c=document.getElementById('proj4');if(!c)return;
+  const ctx=c.getContext('2d');const W=c.width,H=c.height;
+  const stages=[{x:22,lbl:'Raw',col:'#38bdf8'},{x:110,lbl:'Parse',col:'#818cf8'},{x:198,lbl:'Grade',col:'#2dd4bf'},{x:298,lbl:'Report',col:'#f472b6'},{x:390,lbl:'Publish',col:'#a3e635'}];
+  let p1=0,p2=.35,p3=.65,t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#070d1a';ctx.fillRect(0,0,W,H);
+    ctx.beginPath();ctx.moveTo(22,38);ctx.lineTo(W-20,38);
+    const lg=ctx.createLinearGradient(22,0,W-20,0);lg.addColorStop(0,'#38bdf820');lg.addColorStop(.5,'#2dd4bf28');lg.addColorStop(1,'#a3e63518');
+    ctx.strokeStyle=lg;ctx.lineWidth=3;ctx.stroke();
+    stages.forEach(s=>{
+      ctx.beginPath();ctx.arc(s.x,38,13,0,Math.PI*2);ctx.fillStyle='#0d1628';ctx.fill();ctx.strokeStyle=s.col;ctx.lineWidth=1.5;ctx.stroke();
+      ctx.fillStyle=s.col;ctx.font='5.5px JetBrains Mono';ctx.textAlign='center';ctx.fillText(s.lbl,s.x,36);ctx.fillText('●',s.x,46);
+    });
+    [[p1,'#38bdf8'],[p2,'#818cf8'],[p3,'#2dd4bf']].forEach(([p,col])=>{
+      const x=22+p*(W-42);ctx.beginPath();ctx.arc(x,38,5.5,0,Math.PI*2);ctx.fillStyle=col;ctx.shadowBlur=9;ctx.shadowColor=col;ctx.fill();ctx.shadowBlur=0;
+    });
+    p1=(p1+.006)%1;p2=(p2+.008)%1;p3=(p3+.005)%1;
+    ctx.fillStyle='rgba(45,212,191,.4)';ctx.font='7px JetBrains Mono';ctx.textAlign='right';
+    ctx.fillText(`processed: ${180+Math.floor(t/18)*3} records`,W-5,68);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
